@@ -6,14 +6,12 @@ A simple Bash script to backup existing dotfiles, sync them to a repository, and
 
 - 📅 **Date-based Backups**: Creates backups in `backup/YYYY-MM-DD/` to preserve previous configurations.
 - 🔗 **Automatic Symlinks**: Replaces dotfiles in `$HOME` with symlinks pointing to your repo.
-- 🛠 **Multi-File Support**: Handles common dotfiles (`.bashrc`, `.gitconfig`, etc.).
-- ⌨ **Neovim Config Support**: Backs up and links the entire `~/.config/nvim` directory.
+- 🛠 **Multi-File Support**: Handles common dotfiles (`.bashrc`, `.gitconfig`, `.zshrc`, `.tmux.conf`, `.bash_aliases`, `.config/nvim`).
 
 ## Prerequisites
 
 - **Bash**
 - **Git**
-- **Neovim** (optional, if using NVIM configs)
 
 ## Usage
 
@@ -23,40 +21,30 @@ A simple Bash script to backup existing dotfiles, sync them to a repository, and
    cd dotfiles
    ```
 
-2. Make this your dotfiles directory
-   Place all your configuration files directly in the repo root:
-```
-dotfiles/
-├── bashrc
-├── gitconfig
-├── nvim/
-└── backup.sh
-```
+2. Run the backup script:
+   ```bash
+   ./backup.sh
+   ```
 
-3. Run the backup script:
-```bash
-./backup.sh
-```
-
-4. Commit your changes:
-```bash
-git add .
-git commit -m "Update dotfiles"
-```
-
+3. Run the restore script:
+   ```bash
+   ./restore.sh
+   ```
+   
 ## Directory Structure
 After first run:
-```
-dotfiles/
-├── backup/
-│   └── 2025-05-05/  # Example backup
-│       ├── bashrc
-│       ├── nvim/
-│       └── ...
-├── bashrc            # Active bash config
-├── nvim/             # Active Neovim config
-└── backup.sh         # This script
-```
+   ```
+   dotfiles/
+   ├── backup/
+   │   └── 2025-05-05/  # Example backup
+   │       ├── bashrc
+   │       ├── nvim/
+   │       └── ...
+   ├── bashrc            # Active bash config
+   ├── nvim/             # Active Neovim config
+   └── backup.sh         
+   └── restore.sh         
+   ```
 
 ## Important Notes
 - ⚠️ Existing Symlinks: Script skips files that are already symlinks.
