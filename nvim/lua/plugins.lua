@@ -33,7 +33,7 @@ return {
         },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "html", "cssls", "lua_ls", "ts_ls" },
+                ensure_installed = { "html", "cssls", "lua_ls", "ts_ls", "emmet_ls" },
             })
         end
     },

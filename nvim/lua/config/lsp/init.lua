@@ -48,3 +48,24 @@ lspconfig.html.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })
+
+-- emmet ls
+-- for better html, css snippet
+lspconfig.emmet_ls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    -- javascript,
+    filetypes = {
+        "html",
+        "css",
+        "vue",
+        "jsx",
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "tsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+    },
+}
