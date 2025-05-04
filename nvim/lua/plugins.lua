@@ -204,7 +204,6 @@ return {
                     preview = { hidden = 'hidden' }, -- nonaktifkan preview
                 }
             })
-
             -- open buffers
             vim.api.nvim_create_user_command("Eb", function()
                 fzf.buffers()
