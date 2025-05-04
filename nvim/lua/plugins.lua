@@ -59,7 +59,8 @@ return {
             require("nvim-treesitter.configs").setup {
                 ensure_installed = {
                     "html", "javascript", "json",
-                    "lua", "markdown", "typescript"
+                    "lua", "markdown", "typescript",
+                    "tsx"
                 },
                 auto_install = false,
                 sync_install = false, -- Hindari block UI saat install
