@@ -49,6 +49,30 @@ return {
         version = "0.1.7", -- now im use nvim 0.9, newest version compatible with nvim 0.10
     },
 
+
+    -- Comment helper
+    {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        lazy = true,
+        config = function()
+            require('ts_context_commentstring').setup {
+                enable_autocmd = false,
+            }
+        end
+    },
+    {
+        'numToStr/Comment.nvim',
+        event = { "BufReadPost", "BufNewFile" },
+        dependencies = {
+            "JoosepAlviste/nvim-ts-context-commentstring"
+        },
+        config = function()
+            require('Comment').setup {
+                pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+            }
+        end,
+    },
+
     -- TREESITTER
     -- make neovim smart to detect syntax
     {
@@ -191,6 +215,5 @@ return {
                 fzf.files()
             end, {})
         end
-    }
-
+    },
 }
