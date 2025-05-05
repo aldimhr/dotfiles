@@ -1,25 +1,27 @@
 -- config/options.lua
 local opt = vim.opt
 
-opt.compatible = false
-opt.showmatch = true
-opt.ignorecase = true
-opt.mouse = 'a'
-opt.hlsearch = true
-opt.incsearch = true
-opt.tabstop = 4
-opt.softtabstop = 4
-opt.expandtab = true
-opt.shiftwidth = 4
 opt.autoindent = true
-opt.number = true
-opt.relativenumber = true
-opt.scrolloff = 5
 opt.cursorline = true
-opt.termguicolors = true
-opt.wildmode = { 'longest', 'list' }
 opt.clipboard = 'unnamedplus'
 opt.colorcolumn = '120'
+opt.compatible = false
+opt.expandtab = true
+opt.hlsearch = true
+opt.ignorecase = true
+opt.incsearch = true
+opt.mouse = 'a'
+opt.number = true
+opt.relativenumber = true
+opt.smartindent = true
+opt.showmatch = true
+opt.softtabstop = 4
+opt.scrolloff = 5
+opt.shiftwidth = 4
+opt.tabstop = 4
+opt.termguicolors = true
+opt.wildmode = { 'longest', 'list' }
+
 vim.cmd [[highlight LineNr guifg=#C8C8C8]]
 vim.api.nvim_set_hl(0, "SpecialKey", { fg = "#FFD700" })
 
