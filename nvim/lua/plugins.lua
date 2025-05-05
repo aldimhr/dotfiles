@@ -94,7 +94,7 @@ return {
                     additional_vim_regex_highlighting = false,
                 },
                 indent = {
-                    enable = true
+                    enable = false -- instead use smartindent from neovim
                 },
             }
         end
@@ -176,7 +176,17 @@ return {
                             fallback()
                         end
                     end, { "i", "s" }),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+
+                    -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                    ["<CR>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.confirm({ select = true })
+                        else
+                            -- kalau popup gak muncul, panggil default <CR>:
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+
                     ["<C-Space>"] = cmp.mapping.complete(),
                 }),
                 sources = cmp.config.sources({
