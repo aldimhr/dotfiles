@@ -15,10 +15,10 @@ opt.number = true
 opt.relativenumber = true
 opt.smartindent = true
 opt.showmatch = true
-opt.softtabstop = 4
+opt.softtabstop = 2
 opt.scrolloff = 5
-opt.shiftwidth = 4
-opt.tabstop = 4
+opt.shiftwidth = 2
+opt.tabstop = 2
 opt.termguicolors = true
 opt.wildmode = { 'longest', 'list' }
 
