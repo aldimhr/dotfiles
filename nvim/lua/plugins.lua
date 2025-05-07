@@ -34,6 +34,7 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = { "html", "cssls", "lua_ls", "ts_ls", "emmet_ls" },
+        automatic_enable = false -- true just work for nvim > 0.11
       })
     end
   },
