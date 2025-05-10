@@ -17,7 +17,7 @@ return {
 
   -- MASON CORE
   {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
     event = { "BufReadPre", "BufNewFile" }, -- Load saat buka file
     config = function()
       require('mason').setup()
@@ -26,9 +26,9 @@ return {
 
   -- MASON LSP BRIDGE
   {
-    'williamboman/mason-lspconfig.nvim',
+    'mason-org/mason-lspconfig.nvim',
     dependencies = {
-      'williamboman/mason.nvim',
+      'mason-org/mason.nvim',
       'neovim/nvim-lspconfig',
     },
     config = function()
@@ -44,8 +44,8 @@ return {
     'neovim/nvim-lspconfig',
     event = "BufReadPre",
     dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+      'mason-org/mason.nvim',
+      'mason-org/mason-lspconfig.nvim',
     },
     version = "0.1.7", -- now im use nvim 0.9, newest version compatible with nvim 0.10
   },
