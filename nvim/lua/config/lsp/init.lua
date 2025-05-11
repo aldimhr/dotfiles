@@ -15,6 +15,22 @@ local function on_attach(client, bufnr)
   end
 end
 
+-- tailwindcss
+lspconfig.tailwindcss.setup({
+  capabilities = capabilities,
+  settings = {
+    tailwindCSS = {
+      experimental = {
+        classRegex = {
+          { "clsx\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+          { "tw`([^`]*)",        "tw`([^`]*)" },
+          { "cn\\(([^)]*)\\)",   "[\"'`]([^\"'`]*).*?[\"'`]" }, -- opsional, classnames lib
+        },
+      },
+    },
+  },
+})
+
 -- typescript-language-server
 lspconfig.tsserver.setup({
   capabilities = capabilities,
