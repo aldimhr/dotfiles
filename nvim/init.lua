@@ -32,7 +32,7 @@ vim.loader.enable()
 -- Setup plugin manager
 require("lazy").setup("plugins", {
   defaults = { lazy = true },
-  checker = { enabled = true }, -- auto check updates
+  checker = { enabled = false }, -- auto check updates
 })
 
 -- mod require
