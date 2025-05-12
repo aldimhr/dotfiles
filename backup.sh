@@ -5,7 +5,7 @@ BACKUP_DIR=$(pwd)/backup/$DATE
 mkdir -p "$BACKUP_DIR"
 DOTFILES_DIR=$(pwd)
 
-FILES=(bashrc gitconfig zshrc tmux.conf bash_aliases)
+FILES=(bashrc gitconfig zshrc tmux.conf bash_aliases zsh_aliases)
 NVIM_DIR="$HOME/.config/nvim"
 
 echo "[Backup] Starting..."
