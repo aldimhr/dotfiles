@@ -166,15 +166,25 @@ return {
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           }),
-          ["<CR>"] = cmp.mapping(function(fallback) -- select completion
-            if cmp.visible() then
-              cmp.confirm({ select = true })
-            else
-              -- kalau popup gak muncul, panggil default <CR>:
-              fallback()
-            end
-          end, { "i", "s" }),
-
+          ["<CR>"] = cmp.mapping({ -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#safely-select-entries-with-cr
+            i = function(fallback)
+              if cmp.visible() and cmp.get_active_entry() then
+                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+              else
+                fallback()
+              end
+            end,
+            s = cmp.mapping.confirm({ select = true }),
+            c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+          }),
+          -- ["<CR>"] = cmp.mapping(function(fallback) -- select completion
+          --   if cmp.visible() then
+          --     cmp.confirm({ select = true })
+          --   else
+          --     -- kalau popup gak muncul, panggil default <CR>:
+          --     fallback()
+          --   end
+          -- end, { "i", "s" }),
           -- ["<Tab>"] = cmp.mapping(function(fallback)
           --   if cmp.visible() then
           --     cmp.select_next_item()
