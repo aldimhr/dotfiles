@@ -138,7 +138,7 @@ return {
   -- Completion engine
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       -- Sources
       "hrsh7th/cmp-buffer",   -- Words from current buffer
@@ -177,6 +177,21 @@ return {
             s = cmp.mapping.confirm({ select = true }),
             c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
           }),
+          ["<C-l>"] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<C-h>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+
           -- ["<CR>"] = cmp.mapping(function(fallback) -- select completion
           --   if cmp.visible() then
           --     cmp.confirm({ select = true })
