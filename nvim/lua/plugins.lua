@@ -15,6 +15,66 @@ return {
     priority = 900
   },
 
+  -- Comment Helper
+  {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    lazy = true,
+    config = function()
+      require('ts_context_commentstring').setup {
+        enable_autocmd = false,
+      }
+    end
+  },
+
+  -- mini.nvim
+  {
+    'echasnovski/mini.nvim',
+    version = '*',
+    lazy = false,
+    config = function()
+      require('mini.pairs').setup({})
+      require('mini.comment').setup({
+        options = {
+          custom_commentstring = function()
+            return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
+          end,
+        }
+      })
+
+      require('mini.files').setup({
+        mappings = {
+          go_in_plus = '<CR>', -- default: membuka file (biasa)
+          go_in = '<C-l>',     -- masuk ke folder
+          go_out = '<C-h>',    -- keluar dari folder
+          reset = '<BS>',      -- kembali ke root
+        }
+      })
+
+
+      -- Function to open file in split/vsplit mode
+      local MiniFiles = require('mini.files')
+      local function open_in_split(split_cmd)
+        local fs_entry = require('mini.files').get_fs_entry()
+        if fs_entry == nil or fs_entry.fs_type ~= 'file' then return end
+        vim.cmd(split_cmd .. ' ' .. vim.fn.fnameescape(fs_entry.path))
+        MiniFiles.close()
+      end
+
+      -- Adding keymap
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'MiniFilesBufferCreate',
+        callback = function(args)
+          local buf_id = args.data.buf_id
+          vim.keymap.set('n', '<C-v>', function() open_in_split('vsplit') end,
+            { buffer = buf_id, desc = 'Open in vsplit' })
+          vim.keymap.set('n', '<C-s>', function() open_in_split('split') end,
+            { buffer = buf_id, desc = 'Open in split' })
+        end,
+      })
+    end
+  },
+
+
   -- MASON CORE
   {
     'mason-org/mason.nvim',
@@ -51,30 +111,6 @@ return {
   },
 
 
-  -- Comment helper
-  {
-    'JoosepAlviste/nvim-ts-context-commentstring',
-    lazy = true,
-    config = function()
-      require('ts_context_commentstring').setup {
-        enable_autocmd = false,
-      }
-    end
-  },
-  {
-    'numToStr/Comment.nvim',
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring"
-    },
-    config = function()
-      require('Comment').setup {
-        ignore = '^$',
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-      }
-    end,
-  },
-
   -- TREESITTER
   -- make neovim smart to detect syntax
   {
@@ -101,19 +137,6 @@ return {
     end
   },
 
-  -- Auto Pairs
-  {
-    'windwp/nvim-autopairs',
-    -- event = "InsertEnter",
-    lazy = false,
-    config = function()
-      require('nvim-autopairs').setup({
-        check_ts = true,                                 -- Mengaktifkan integrasi Treesitter untuk mendeteksi tag HTML lebih akurat
-        map_cr = true,
-        disable_filetype = { "TelescopePrompt", "vim" }, -- Nonaktifkan di file tertentu jika perlu
-      })
-    end
-  },
 
   -- Auto-tag untuk HTML/XML
   {
@@ -144,7 +167,6 @@ return {
       "hrsh7th/cmp-buffer",   -- Words from current buffer
       "hrsh7th/cmp-path",     -- Filesystem paths
       "hrsh7th/cmp-nvim-lsp", -- From LSP
-      "nvim-autopairs",
       "LuaSnip",
       "cmp_luasnip",
     },
@@ -191,35 +213,6 @@ return {
               fallback()
             end
           end, { "i", "s" }),
-
-          -- ["<CR>"] = cmp.mapping(function(fallback) -- select completion
-          --   if cmp.visible() then
-          --     cmp.confirm({ select = true })
-          --   else
-          --     -- kalau popup gak muncul, panggil default <CR>:
-          --     fallback()
-          --   end
-          -- end, { "i", "s" }),
-          -- ["<Tab>"] = cmp.mapping(function(fallback)
-          --   if cmp.visible() then
-          --     cmp.select_next_item()
-          --   elseif luasnip.expand_or_jumpable() then
-          --     luasnip.expand_or_jump()
-          --   else
-          --     fallback()
-          --   end
-          -- end, { "i", "s" }),
-          -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-          --   if cmp.visible() then
-          --     cmp.select_prev_item()
-          --   elseif luasnip.jumpable(-1) then
-          --     luasnip.jump(-1)
-          --   else
-          --     fallback()
-          --   end
-          -- end, { "i", "s" }),
-          -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          -- ["<C-Space>"] = cmp.mapping.complete(),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
@@ -228,10 +221,6 @@ return {
           { name = "path" },
         }),
       })
-
-      -- Integrasi autopairs dengan cmp
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
   },
 
@@ -251,42 +240,9 @@ return {
         files = {
           fzf_opts = { ['--prompt'] = 'Files> ' },
           actions  = {
-            -- 1) Default “Enter” opens the file
+            -- Default “Enter” opens the file
             ['default'] = function(sel)
               file_utils.open_path(sel[1])
-            end,
-
-            -- create new file or folder
-            ['ctrl-n'] = function()
-              vim.ui.input({ prompt = "New file path: " }, function(input)
-                if input and input ~= "" then
-                  require('utils.file').edit_or_create_file(input)
-                else
-                  print("Path is empty")
-                end
-              end)
-            end,
-
-            -- delete file or folder
-            ['ctrl-d'] = function(sel)
-              local path = sel[1] or ""
-              local plain = require('utils.file').strip_icons(path)
-              require('utils.file').delete_path_input(plain)
-              vim.schedule(function() require('fzf-lua').files() end)
-            end,
-
-            -- rename file or folder
-            -- ['ctrl-r'] = function(sel)
-            --   local plain = file_utils.strip_icons(sel[1])
-            --   file_utils.rename_path(plain)
-            --   vim.schedule(function() fzf.files() end)
-            -- end,
-
-            -- move file
-            ['ctrl-r'] = function(sel)
-              local plain = file_utils.strip_icons(sel[1])
-              file_utils.move_path(plain)
-              vim.schedule(function() fzf.files() end)
             end,
           }
         }
@@ -303,3 +259,32 @@ return {
     end
   },
 }
+
+-- Comment helper
+-- {
+--   'numToStr/Comment.nvim',
+--   event = { "BufReadPost", "BufNewFile" },
+--   dependencies = {
+--     "JoosepAlviste/nvim-ts-context-commentstring"
+--   },
+--   config = function()
+--     require('Comment').setup {
+--       ignore = '^$',
+--       pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+--     }
+--   end,
+-- },
+
+-- Auto Pairs
+-- {
+--   'windwp/nvim-autopairs',
+--   -- event = "InsertEnter",
+--   lazy = false,
+--   config = function()
+--     require('nvim-autopairs').setup({
+--       check_ts = true,                                 -- Mengaktifkan integrasi Treesitter untuk mendeteksi tag HTML lebih akurat
+--       map_cr = true,
+--       disable_filetype = { "TelescopePrompt", "vim" }, -- Nonaktifkan di file tertentu jika perlu
+--     })
+--   end
+-- },

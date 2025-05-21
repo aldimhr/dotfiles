@@ -12,6 +12,12 @@ vim.keymap.set('x', 'p', '"_dP')
 
 -- FZF LUA
 -- open buffers
-vim.keymap.set('n', '<leader>eb', function() require('fzf-lua').buffers() end, { desc = "FZF Buffers" })
--- open files
-vim.keymap.set('n', '<leader>ef', function() require('fzf-lua').files() end, { desc = "FZF Files" })
+vim.keymap.set('n', '<leader>eb', function()
+  require('fzf-lua').buffers()
+end, { desc = "FZF Buffers" })
+
+-- Mini.nvim
+-- Open Files
+vim.keymap.set('n', '<leader>ef', function()
+  require('mini.files').open()
+end, { desc = "Mini Files" })
