@@ -16,6 +16,11 @@ vim.keymap.set('n', '<leader>eb', function()
   require('fzf-lua').buffers()
 end, { desc = "FZF Buffers" })
 
+-- open files
+vim.keymap.set('n', '<leader>ff', function()
+  require('mini.files').open()
+end, { desc = "Mini Files" })
+
 -- Mini.nvim
 -- Open Files
 vim.keymap.set('n', '<leader>ef', function()
