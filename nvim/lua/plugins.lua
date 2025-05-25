@@ -142,6 +142,7 @@ return {
   {
     "windwp/nvim-ts-autotag",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = { "BufReadPre", "BufNewFile" }, -- Load saat buka file
     config = function()
       require("nvim-ts-autotag").setup()
     end,
