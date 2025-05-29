@@ -36,8 +36,8 @@ require("lazy").setup("plugins", {
 })
 
 -- mod require
-require("config.theme")
-require("config.options")
-require("config.lsp")
-require("config.autocmd")
-require("config.keymaps")
+require("core.theme")
+require("core.options")
+require("core.lsp")
+require("core.autocmd")
+require("core.keymaps")
