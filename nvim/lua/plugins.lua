@@ -26,6 +26,19 @@ return {
     end
   },
 
+  -- indent scope line
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    event = { "BufReadPre", "BufNewFile" },
+    -- -@module "ibl"
+    -- -@type ibl.config
+    opts = {
+      indent = { char = "┃" }, --  { char = "│" },
+      scope = { enabled = false },
+    },
+  },
+
   -- mini.nvim
   {
     'echasnovski/mini.nvim',
