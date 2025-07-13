@@ -13,7 +13,19 @@ local function on_attach(client, bufnr)
       end,
     })
   end
+
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 end
+
+-- astro
+lspconfig.astro.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
 
 -- tailwindcss
 lspconfig.tailwindcss.setup({

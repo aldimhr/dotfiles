@@ -15,6 +15,9 @@ return {
     priority = 900
   },
 
+  -- wakatime
+  { 'wakatime/vim-wakatime',   lazy = false },
+
   -- Comment Helper
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
@@ -56,6 +59,7 @@ return {
 
       require('mini.files').setup({
         mappings = {
+          close = '<Esc>',     -- close
           go_in_plus = '<CR>', -- default: membuka file (biasa)
           go_in = '<C-l>',     -- masuk ke folder
           go_out = '<C-h>',    -- keluar dari folder
