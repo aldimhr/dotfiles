@@ -21,6 +21,12 @@ local function on_attach(client, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 end
 
+-- c lang
+lspconfig.clangd.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
 -- astro
 lspconfig.astro.setup({
   capabilities = capabilities,
