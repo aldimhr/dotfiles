@@ -17,6 +17,7 @@ alias l='ls -CF'
 alias c='clear'
 alias ..='cd ..'
 alias fd='fdfind'
+alias cat='batcat'
 # alias la='ls -a'
 
 
