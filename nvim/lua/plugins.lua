@@ -15,6 +15,14 @@ return {
     priority = 900
   },
 
+  -- {
+  --   'vyfor/cord.nvim',
+  --   lazy = false,
+  --   build = ':Cord update',
+  --   -- opts = {}
+  -- },
+
+
   -- wakatime
   { 'wakatime/vim-wakatime',   lazy = false },
 
