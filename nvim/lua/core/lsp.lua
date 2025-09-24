@@ -38,6 +38,7 @@ local function on_attach_c(client, bufnr)
     -- kalau mau total disable di clangd
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
+    client.server_capabilities.semanticTokensProvider = false
   end
 
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
