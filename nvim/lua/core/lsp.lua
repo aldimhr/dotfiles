@@ -21,25 +21,13 @@ local function on_attach(client, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 end
 
-local function on_attach_c(client, bufnr)
-  local ft = vim.bo[bufnr].filetype
-
-  -- 🔹 Disable autoformat for C
-  if ft ~= "c" and client.supports_method("textDocument/formatting") then
-    vim.api.nvim_clear_autocmds({ group = lsp_format_augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = lsp_format_augroup,
-      buffer = bufnr,
-      callback = function()
-        vim.lsp.buf.format({ bufnr = bufnr, async = false })
-      end,
-    })
-  else
-    -- kalau mau total disable di clangd
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
-    client.server_capabilities.semanticTokensProvider = false
-  end
+local function on_attach_minimal(client, bufnr)
+  -- Disable semua formatting dan highlighting capabilities
+  client.server_capabilities.documentFormattingProvider = false
+  client.server_capabilities.documentRangeFormattingProvider = false
+  client.server_capabilities.semanticTokensProvider = nil
+  client.server_capabilities.documentHighlightProvider = false
+  client.server_capabilities.colorProvider = false
 
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
@@ -51,7 +39,7 @@ end
 -- c lang
 lspconfig.clangd.setup({
   capabilities = capabilities,
-  on_attach = on_attach_c,
+  on_attach = on_attach_minimal,
 })
 
 -- astro
@@ -85,14 +73,17 @@ lspconfig.tsserver.setup({
 -- lua lang
 lspconfig.lua_ls.setup({
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = on_attach_minimal,
   settings = {
     Lua = {
       format = {
-        enable = true,
+        enable = false, -- disable formatting
       },
       diagnostics = {
         globals = { "vim" }, -- supaya 'vim' tidak dianggap error
+      },
+      semantic = {
+        enable = false,
       },
     },
   },
@@ -130,3 +121,5 @@ lspconfig.emmet_ls.setup {
     "typescript.tsx",
   },
 }
+
+
