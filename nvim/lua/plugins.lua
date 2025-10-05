@@ -144,7 +144,7 @@ return {
         auto_install = false,
         sync_install = false, -- Hindari block UI saat install
         highlight = {
-          enable = true,
+          enable = false,
           additional_vim_regex_highlighting = false,
         },
         indent = {
@@ -278,31 +278,3 @@ return {
   },
 }
 
--- Comment helper
--- {
---   'numToStr/Comment.nvim',
---   event = { "BufReadPost", "BufNewFile" },
---   dependencies = {
---     "JoosepAlviste/nvim-ts-context-commentstring"
---   },
---   config = function()
---     require('Comment').setup {
---       ignore = '^$',
---       pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
---     }
---   end,
--- },
-
--- Auto Pairs
--- {
---   'windwp/nvim-autopairs',
---   -- event = "InsertEnter",
---   lazy = false,
---   config = function()
---     require('nvim-autopairs').setup({
---       check_ts = true,                                 -- Mengaktifkan integrasi Treesitter untuk mendeteksi tag HTML lebih akurat
---       map_cr = true,
---       disable_filetype = { "TelescopePrompt", "vim" }, -- Nonaktifkan di file tertentu jika perlu
---     })
---   end
--- },
