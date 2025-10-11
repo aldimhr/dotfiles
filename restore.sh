@@ -2,7 +2,7 @@
 
 DATE=$(date +%Y-%m-%d)
 BACKUP_DIR=$(pwd)/backup/$DATE
-FILES=(bashrc gitconfig zshrc tmux.conf bash_aliases)
+FILES=(bashrc gitconfig zshrc tmux.conf bash_aliases zsh_aliases)
 NVIM_DIR="$HOME/.config/nvim"
 DOTFILES_DIR=$(pwd)
 
