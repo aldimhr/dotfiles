@@ -52,4 +52,4 @@ After first run:
 - 🔗 Symlink Behavior: Changes made through symlinks (in $HOME) directly modify repo files.
 
 ## Compatibility
-Tested on Ubuntu 24.04
+Tested on EndeavourOS
