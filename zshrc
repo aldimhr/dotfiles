@@ -129,5 +129,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Rust configuration
-. "$HOME/.cargo/env" # load rust
+#. "$HOME/.cargo/env" # load rust
 
