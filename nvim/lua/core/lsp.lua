@@ -45,7 +45,7 @@ lspconfig.clangd.setup({
 -- astro
 lspconfig.astro.setup({
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = on_attach_minimal,
 })
 
 -- tailwindcss
@@ -67,7 +67,7 @@ lspconfig.tailwindcss.setup({
 -- typescript-language-server
 lspconfig.tsserver.setup({
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = on_attach_minimal,
 })
 
 -- lua lang
@@ -98,14 +98,14 @@ lspconfig.cssls.setup({
 -- html
 lspconfig.html.setup({
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = on_attach_minimal,
 })
 
 -- emmet ls
 -- for better html, css snippet
 lspconfig.emmet_ls.setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = on_attach_minimal,
   -- javascript,
   filetypes = {
     "html",
