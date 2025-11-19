@@ -34,6 +34,9 @@ vim.api.nvim_set_hl(0, 'CmpDocBorder', { fg = '#3e3e3e', bg = '#1e1e1e' })
 vim.api.nvim_set_hl(0, 'CmpDoc', { fg = '#dcdcdc', bg = '#1e1e1e' })
 vim.api.nvim_set_hl(0, 'CmpItemSel', { fg = '#ffffff', bg = '#007acc' })
 
+-- set background tooltip
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#282c34" })
+
 -- opt.spell = true
 -- opt.swapfile = false
 -- opt.backupdir = vim.fn.expand('~/.cache/vim')
