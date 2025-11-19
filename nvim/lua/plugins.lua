@@ -18,6 +18,17 @@ return {
   -- wakatime
   { 'wakatime/vim-wakatime',   lazy = false },
 
+  -- diagnostic viewer
+  {
+      "rachartier/tiny-inline-diagnostic.nvim",
+      event = "VeryLazy",
+      priority = 1000,
+      config = function()
+          require("tiny-inline-diagnostic").setup()
+          vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+      end,
+  },
+
   -- Comment Helper
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
@@ -111,7 +122,7 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = { "html", "cssls", "lua_ls", "ts_ls", "emmet_ls" },
-        automatic_enable = false -- true just work for nvim > 0.11
+        -- automatic_enable = false -- true just work for nvim > 0.11
       })
     end
   },
