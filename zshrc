@@ -1,16 +1,17 @@
 # welcome message
-cat << "EOF"
-
-           .--.
-          |o_o |
-          |:_/ |
-         //   \ \
-        (|     | )
-       /'\_   _/`\
-       \___)=(___/
-
-
-EOF
+cat ~/.config/ASCII/penguin.txt
+# cat << 'EOF'
+#
+#            .--.
+#           |o_o |
+#           |:_/ |
+#          //   \ \
+#         (|     | )
+#        /'\_   _/`\
+#        \___)=(___/
+#
+#
+# EOF
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
@@ -131,3 +132,35 @@ export NVM_DIR="$HOME/.nvm"
 # Rust configuration
 #. "$HOME/.cargo/env" # load rust
 
+
+# pnpm
+export PNPM_HOME="/home/otak/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# android
+export PATH=$PATH:/opt/android-studio/bin
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+#export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH"
+
+# java from android
+export JAVA_HOME="/opt/android-studio/jbr"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+
+# bun completions
+[ -s "/home/otak/.bun/_bun" ] && source "/home/otak/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# sudo editor
+export EDITOR=nvim
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
