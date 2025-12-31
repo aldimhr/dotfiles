@@ -124,6 +124,11 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 [[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
 
+# History Conf
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+
 # NVM configuration
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -131,7 +136,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # Rust configuration
 #. "$HOME/.cargo/env" # load rust
-
 
 # pnpm
 export PNPM_HOME="/home/otak/.local/share/pnpm"
@@ -150,7 +154,6 @@ export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cm
 export JAVA_HOME="/opt/android-studio/jbr"
 export PATH="$JAVA_HOME/bin:$PATH"
 
-
 # bun completions
 [ -s "/home/otak/.bun/_bun" ] && source "/home/otak/.bun/_bun"
 
@@ -164,3 +167,6 @@ export EDITOR=nvim
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Adding starship
+eval "$(starship init zsh)"
