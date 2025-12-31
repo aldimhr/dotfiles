@@ -10,16 +10,15 @@ vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]], { noremap = true, silent = tru
 -- change copy paste behavior
 vim.keymap.set('x', 'p', '"_dP')
 
--- fzf.nvim
--- open buffers
+-- fzf.nvim - open buffers
 vim.keymap.set('n', '<leader>eb', function()
   require('fzf-lua').buffers()
 end, { desc = "FZF Buffers" })
 
--- open files
+-- fzf.nvim - open files
 vim.keymap.set('n', '<leader>ff', function()
-  require('mini.files').open()
-end, { desc = "Mini Files" })
+  require('fzf-lua').files()
+end, { desc = "FZF Files" })
 
 
 -- Mini.nvim

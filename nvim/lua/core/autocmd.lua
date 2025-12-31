@@ -1,1 +1,80 @@
-
+-- -- Add this to your init.lua or in a separate file in your config
+--
+-- -- Function to display image by temporarily suspending Neovim
+-- local function show_image(path)
+--   -- Expand path to handle ~ and relative paths
+--   local expanded_path = vim.fn.expand(path)
+--
+--   -- Check if file exists
+--   if vim.fn.filereadable(expanded_path) == 0 then
+--     vim.notify("File not found: " .. expanded_path, vim.log.levels.ERROR)
+--     return
+--   end
+--
+--   -- Suspend Neovim and show image in the terminal
+--   -- The image will display, then wait for Enter to return to Neovim
+--   vim.cmd(string.format("silent !clear && wezterm imgcat '%s' && echo '' && read -p 'Press Enter to return to Neovim...'", expanded_path))
+--   vim.cmd('redraw!')
+-- end
+--
+-- -- Autocommand to automatically display images when opening image files
+-- vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+--   pattern = {"*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.webp", "*.ico", "*.svg"},
+--   callback = function()
+--     local filepath = vim.fn.expand("%:p")
+--
+--     -- Show the image immediately
+--     show_image(filepath)
+--
+--     -- Set buffer info
+--     vim.api.nvim_buf_set_lines(0, 0, -1, false, {
+--       "Image File",
+--       "",
+--       "File: " .. vim.fn.expand("%:t"),
+--       "Path: " .. filepath,
+--       "",
+--       "Commands:",
+--       "  :ShowImage  - Display the image again",
+--       "  :q          - Close this buffer",
+--       "",
+--       "Keymap:",
+--       "  <leader>si  - Show image under cursor",
+--     })
+--
+--     vim.bo.readonly = true
+--     vim.bo.modifiable = false
+--     vim.bo.buftype = 'nofile'
+--   end,
+--   desc = "Automatically display images using WezTerm imgcat"
+-- })
+--
+-- -- Manual command :ShowImage <path>
+-- vim.api.nvim_create_user_command('ShowImage', function(opts)
+--   local path = opts.args ~= "" and opts.args or vim.fn.expand("%:p")
+--   show_image(path)
+-- end, {
+--   nargs = '?',
+--   complete = 'file',
+--   desc = 'Display an image using WezTerm imgcat'
+-- })
+--
+-- -- Show image under cursor
+-- vim.api.nvim_create_user_command('ShowImageUnderCursor', function()
+--   local word = vim.fn.expand('<cfile>')
+--   show_image(word)
+-- end, {
+--   desc = 'Display image from path under cursor'
+-- })
+--
+-- -- Keymaps
+-- vim.keymap.set('n', '<leader>si', ':ShowImageUnderCursor<CR>', {
+--   desc = 'Show image under cursor',
+--   silent = true
+-- })
+--
+-- vim.keymap.set('n', '<leader>sr', function()
+--   show_image(vim.fn.expand("%:p"))
+-- end, {
+--   desc = 'Show current image again',
+--   silent = true
+-- })

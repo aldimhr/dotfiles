@@ -101,6 +101,12 @@ lspconfig.html.setup({
   on_attach = on_attach_minimal,
 })
 
+-- tailwindcss
+lspconfig.tailwindcss.setup({
+  capabilities = capabilities,
+  on_attach = on_attach_minimal,
+})
+
 -- emmet ls
 -- for better html, css snippet
 lspconfig.emmet_ls.setup {
