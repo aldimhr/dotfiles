@@ -85,7 +85,26 @@ return {
           go_in = '<C-l>',     -- masuk ke folder
           go_out = '<C-h>',    -- keluar dari folder
           reset = '<BS>',      -- kembali ke root
-        }
+        },
+        content = {
+          sort = function(entries)
+            local function extract_number(name)
+              return tonumber(name:match("(%d+)")) or math.huge
+            end
+
+            table.sort(entries, function(a, b)
+              local na = extract_number(a.name)
+              local nb = extract_number(b.name)
+
+              if na == nb then
+                return a.name < b.name
+              end
+              return na < nb
+            end)
+
+            return entries
+          end,
+        },
       })
 
 
