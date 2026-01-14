@@ -91,20 +91,48 @@ return {
             local function extract_number(name)
               return tonumber(name:match("(%d+)")) or math.huge
             end
-
+            
             table.sort(entries, function(a, b)
+              -- Check if entries are directories
+              local a_is_dir = a.fs_type == 'directory'
+              local b_is_dir = b.fs_type == 'directory'
+              
+              -- If one is a directory and the other isn't, directory comes first
+              if a_is_dir ~= b_is_dir then
+                return a_is_dir
+              end
+              
+              -- Both are the same type (both dirs or both files), sort by number
               local na = extract_number(a.name)
               local nb = extract_number(b.name)
-
               if na == nb then
                 return a.name < b.name
               end
               return na < nb
             end)
-
+            
             return entries
           end,
         },
+        -- content = {
+        --   sort = function(entries)
+        --     local function extract_number(name)
+        --       return tonumber(name:match("(%d+)")) or math.huge
+        --     end
+        --
+        --     table.sort(entries, function(a, b)
+        --       local na = extract_number(a.name)
+        --       local nb = extract_number(b.name)
+        --
+        --       if na == nb then
+        --         return a.name < b.name
+        --       end
+        --       return na < nb
+        --     end)
+        --
+        --     return entries
+        --   end,
+        -- },
       })
 
 
