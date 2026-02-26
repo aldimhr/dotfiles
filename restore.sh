@@ -6,6 +6,7 @@ FILES=(bashrc gitconfig zshrc tmux.conf bash_aliases zsh_aliases)
 NVIM_DIR="$HOME/.config/nvim"
 HYPR_DIR="$HOME/.config/hypr"
 KITTY_DIR="$HOME/.config/kitty"
+WAYBAR_DIR="$HOME/.config/waybar"
 DOTFILES_DIR=$(pwd)
 
 echo "[Restore] Starting..."
@@ -60,6 +61,16 @@ if [ -d "$DOTFILES_DIR/kitty" ]; then
   fi
 fi
 
+# Restore Waybar directory
+if [ -d "$DOTFILES_DIR/waybar" ]; then
+  if [ -L "$WAYBAR_DIR" ]; then
+    echo "$WAYBAR_DIR is already a symlink. Skipping restore."
+  else
+    echo "Moving existing $WAYBAR_DIR to $BACKUP_DIR/ and create symlink"
+    mv "$WAYBAR_DIR" "$BACKUP_DIR/"
+    ln -sf "$DOTFILES_DIR/waybar" "$WAYBAR_DIR"
+  fi
+fi
 
 echo "[Restore] Done."
 
